@@ -36,6 +36,7 @@ namespace ScreenshotHud.Screens
             this.ScreenSelect = new System.Windows.Forms.ComboBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnFreeze = new System.Windows.Forms.Button();
             this.chkScreenshot = new System.Windows.Forms.CheckBox();
             this.btnNewCaptureBox = new System.Windows.Forms.Button();
             this.btnNewPoint = new System.Windows.Forms.Button();
@@ -61,7 +62,7 @@ namespace ScreenshotHud.Screens
             this.CaptureBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.CaptureBox.Location = new System.Drawing.Point(0, 164);
             this.CaptureBox.Name = "CaptureBox";
-            this.CaptureBox.Size = new System.Drawing.Size(1280, 720);
+            this.CaptureBox.Size = new System.Drawing.Size(1416, 720);
             this.CaptureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.CaptureBox.TabIndex = 2;
             this.CaptureBox.TabStop = false;
@@ -75,13 +76,13 @@ namespace ScreenshotHud.Screens
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1280, 56);
+            this.panel1.Size = new System.Drawing.Size(1416, 56);
             this.panel1.TabIndex = 3;
             // 
             // btnAddNewScreen
             // 
             this.btnAddNewScreen.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAddNewScreen.Location = new System.Drawing.Point(1045, 0);
+            this.btnAddNewScreen.Location = new System.Drawing.Point(1181, 0);
             this.btnAddNewScreen.Name = "btnAddNewScreen";
             this.btnAddNewScreen.Size = new System.Drawing.Size(147, 56);
             this.btnAddNewScreen.TabIndex = 1;
@@ -103,7 +104,7 @@ namespace ScreenshotHud.Screens
             // 
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(1192, 0);
+            this.btnDelete.Location = new System.Drawing.Point(1328, 0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(88, 56);
             this.btnDelete.TabIndex = 2;
@@ -113,6 +114,7 @@ namespace ScreenshotHud.Screens
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnFreeze);
             this.panel2.Controls.Add(this.chkScreenshot);
             this.panel2.Controls.Add(this.btnNewCaptureBox);
             this.panel2.Controls.Add(this.btnNewPoint);
@@ -122,8 +124,19 @@ namespace ScreenshotHud.Screens
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 56);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1280, 47);
+            this.panel2.Size = new System.Drawing.Size(1416, 47);
             this.panel2.TabIndex = 4;
+            // 
+            // btnFreeze
+            // 
+            this.btnFreeze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFreeze.Location = new System.Drawing.Point(1181, 4);
+            this.btnFreeze.Name = "btnFreeze";
+            this.btnFreeze.Size = new System.Drawing.Size(102, 40);
+            this.btnFreeze.TabIndex = 6;
+            this.btnFreeze.Text = "Freeze";
+            this.btnFreeze.UseVisualStyleBackColor = true;
+            this.btnFreeze.Click += new System.EventHandler(this.btnFreeze_Click);
             // 
             // chkScreenshot
             // 
@@ -163,7 +176,7 @@ namespace ScreenshotHud.Screens
             this.chkMatching.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkMatching.AutoSize = true;
             this.chkMatching.Enabled = false;
-            this.chkMatching.Location = new System.Drawing.Point(1153, 8);
+            this.chkMatching.Location = new System.Drawing.Point(1289, 8);
             this.chkMatching.Name = "chkMatching";
             this.chkMatching.Size = new System.Drawing.Size(127, 34);
             this.chkMatching.TabIndex = 2;
@@ -195,7 +208,7 @@ namespace ScreenshotHud.Screens
             this.pointPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pointPanel.Location = new System.Drawing.Point(0, 103);
             this.pointPanel.Name = "pointPanel";
-            this.pointPanel.Size = new System.Drawing.Size(1280, 30);
+            this.pointPanel.Size = new System.Drawing.Size(1416, 30);
             this.pointPanel.TabIndex = 5;
             // 
             // label2
@@ -215,7 +228,7 @@ namespace ScreenshotHud.Screens
             this.boxPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.boxPanel.Location = new System.Drawing.Point(0, 133);
             this.boxPanel.Name = "boxPanel";
-            this.boxPanel.Size = new System.Drawing.Size(1280, 30);
+            this.boxPanel.Size = new System.Drawing.Size(1416, 30);
             this.boxPanel.TabIndex = 6;
             // 
             // label3
@@ -233,7 +246,7 @@ namespace ScreenshotHud.Screens
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1280, 884);
+            this.ClientSize = new System.Drawing.Size(1416, 884);
             this.Controls.Add(this.boxPanel);
             this.Controls.Add(this.pointPanel);
             this.Controls.Add(this.panel2);
@@ -275,5 +288,6 @@ namespace ScreenshotHud.Screens
         private System.Windows.Forms.FlowLayoutPanel boxPanel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkScreenshot;
+        private System.Windows.Forms.Button btnFreeze;
     }
 }

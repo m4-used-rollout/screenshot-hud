@@ -22,7 +22,7 @@ namespace ScreenshotHud.Screens
         private List<CaptureBoxEditor> BoxEditors { get; } = new List<CaptureBoxEditor>();
         private List<Color> Colors { get; } = new List<Color>();
         private Action<Point> PointClickFunction { get; set; }
-        private Graphics draw { get; set; }
+        private Graphics Draw { get; set; }
 
         public Editor()
         {
@@ -59,8 +59,8 @@ namespace ScreenshotHud.Screens
         public void UpdateCapture(Bitmap capture)
         {
             CaptureBox.Image = CaptureBox.Image ?? new Bitmap(capture);
-            draw = draw ?? Graphics.FromImage(CaptureBox.Image);
-            draw.DrawImage(capture, 0, 0);
+            Draw = Draw ?? Graphics.FromImage(CaptureBox.Image);
+            Draw.DrawImage(capture, 0, 0);
             if (SelectedScreen != null)
             {
                 var penMatching = new Pen(Color.Green, 3);
@@ -75,13 +75,13 @@ namespace ScreenshotHud.Screens
                         Colors.Add(Color.FromArgb(128, rand.Next(32, 255), rand.Next(32, 255), rand.Next(32, 255)));
                     var pen = new Pen(Colors[i]);
                     var rectangle = new Rectangle(b.CaptureBox.Point.X, b.CaptureBox.Point.Y, b.CaptureBox.Size.Width, b.CaptureBox.Size.Height);
-                    draw.FillRectangle(pen.Brush, rectangle);
-                    draw.DrawString(b.CaptureBox.Name, DefaultFont, penBlack.Brush, rectangle);
+                    Draw.FillRectangle(pen.Brush, rectangle);
+                    Draw.DrawString(b.CaptureBox.Name, DefaultFont, penBlack.Brush, rectangle);
                 });
                 PointEditors.ForEach(p =>
                 {
                     p.Matching = SelectedScreen.CheckPointMatching(p.Point, capture);
-                    draw.DrawRectangle(p.Matching ? penMatching : penNotMatching, new Rectangle(p.Point.Point.X - 1, p.Point.Point.Y - 1, 3, 3));
+                    Draw.DrawRectangle(p.Matching ? penMatching : penNotMatching, new Rectangle(p.Point.Point.X - 1, p.Point.Point.Y - 1, 3, 3));
                 });
                 chkMatching.Checked = SelectedScreen.IsMatching;
             }
@@ -216,6 +216,15 @@ namespace ScreenshotHud.Screens
         private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
         {
             SelectedScreen.SaveScreenshot = chkScreenshot.Checked;
+        }
+
+        private void btnFreeze_Click(object sender, EventArgs e)
+        {
+            ShotTaker.Freeze();
+            if (btnFreeze.Text == "Freeze")
+                btnFreeze.Text = "Thaw";
+            else
+                btnFreeze.Text = "Freeze";
         }
     }
 }
