@@ -22,7 +22,7 @@ namespace ScreenshotHud
             Program.RegisterForConfigUpdate(ConfigUpdate);
             DisplaySelect.DataSource = Screen.AllScreens;
             DisplaySelect.DisplayMember = "Bounds";
-            if (Config.SelectedDisplay != null)
+            if (Config.SelectedDisplay != null && Config.SelectedDisplay < Screen.AllScreens.Length)
                 DisplaySelect.SelectedIndex = Config.SelectedDisplay ?? 0;
             else
                 DisplaySelect.SelectedItem = Screen.AllScreens.Last();
@@ -78,7 +78,8 @@ namespace ScreenshotHud
                 SaveConfig();
             else
                 btnSave.Enabled = true;
-            DisplaySelect.SelectedIndex = Config.SelectedDisplay ?? DisplaySelect.SelectedIndex;
+            if (Config.SelectedDisplay != null && Config.SelectedDisplay < Screen.AllScreens.Length)
+                DisplaySelect.SelectedIndex = Config.SelectedDisplay ?? DisplaySelect.SelectedIndex;
             numColorDrift.Value = Config.MatchColorDrift;
             chkAutoSave.Checked = Config.AutoSave;
         }
