@@ -19,6 +19,8 @@ namespace ScreenshotHud
             SetPosSizeFromConfig();
             chkAutoSave.Checked = Config.AutoSave;
             numColorDrift.Value = Config.MatchColorDrift;
+            numCaptureSpeed.Value = Config.ShotDelayMS;
+            CaptureTimer.Interval = Config.ShotDelayMS;
             Program.RegisterForConfigUpdate(ConfigUpdate);
             DisplaySelect.DataSource = Screen.AllScreens;
             DisplaySelect.DisplayMember = "Bounds";
@@ -81,6 +83,8 @@ namespace ScreenshotHud
             if (Config.SelectedDisplay != null && Config.SelectedDisplay < Screen.AllScreens.Length)
                 DisplaySelect.SelectedIndex = Config.SelectedDisplay ?? DisplaySelect.SelectedIndex;
             numColorDrift.Value = Config.MatchColorDrift;
+            numCaptureSpeed.Value = Config.ShotDelayMS;
+            CaptureTimer.Interval = Config.ShotDelayMS;
             chkAutoSave.Checked = Config.AutoSave;
         }
 
@@ -163,10 +167,17 @@ namespace ScreenshotHud
                 Program.NotifyConfigUpdate();
             }
         }
+        private void numCaptureSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Config.ShotDelayMS = (int)numCaptureSpeed.Value;
+            Program.NotifyConfigUpdate();
+        }
 
         private void BtnOverlay_Click(object sender, EventArgs e)
         {
             SpawnOverlay();
         }
+
+
     }
 }

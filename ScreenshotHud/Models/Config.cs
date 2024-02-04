@@ -8,6 +8,7 @@ namespace ScreenshotHud.Models
     {
         public List<DetectedScreen> DetectedScreens { get; set; } = new List<DetectedScreen>();
         public int MatchColorDrift { get; set; } = 0;
+        public int ShotDelayMS { get; set; } = 50;
         public int? SelectedDisplay { get; set; }
         public Rectangle PreviewWindow { get; set; }
         public Rectangle ControlWindow { get; set; }
