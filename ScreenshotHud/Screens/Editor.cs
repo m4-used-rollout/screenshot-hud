@@ -43,7 +43,7 @@ namespace ScreenshotHud.Screens
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            ShotTaker.Register(UpdateCapture);
+            ShotTaker.ShotNotifier.Register(UpdateCapture);
             var chromeWidth = Width - ClientRectangle.Width;
             Width = 848 + chromeWidth;
             MinimumSize = new Size(Width, 64);
@@ -52,7 +52,7 @@ namespace ScreenshotHud.Screens
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            ShotTaker.Unregister(UpdateCapture);
+            ShotTaker.ShotNotifier.Unregister(UpdateCapture);
             base.OnFormClosing(e);
         }
 
@@ -118,7 +118,7 @@ namespace ScreenshotHud.Screens
             screen.Name = $"Screen {Program.Config.DetectedScreens.Count}";
             Screens.ResetBindings(false);
             ScreenSelect.SelectedItem = screen;
-            Program.NotifyConfigUpdate();
+            Program.ConfigUpdates.Notify(Program.Config);
         }
 
         private void ScreenSelect_SelectedValueChanged(object sender, EventArgs e)
@@ -142,7 +142,7 @@ namespace ScreenshotHud.Screens
                   pointPanel.Controls.Remove(editor);
                   PointEditors.Remove(editor);
                   SelectedScreen.MatchPoints.Remove(point);
-                  Program.NotifyConfigUpdate();
+                  Program.ConfigUpdates.Notify(Program.Config);
               });
             PointEditors.Add(editor);
             pointPanel.Controls.Add(editor);
@@ -155,7 +155,7 @@ namespace ScreenshotHud.Screens
                 boxPanel.Controls.Remove(editor);
                 BoxEditors.Remove(editor);
                 SelectedScreen.CaptureBoxes.Remove(box);
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify(Program.Config);
             });
             BoxEditors.Add(editor);
             boxPanel.Controls.Add(editor);
@@ -170,7 +170,7 @@ namespace ScreenshotHud.Screens
                 ScreenSelect.SelectedIndex = 0;
             else
                 ToggleScreenEditorTools();
-            Program.NotifyConfigUpdate();
+            Program.ConfigUpdates.Notify(Program.Config);
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
@@ -187,7 +187,7 @@ namespace ScreenshotHud.Screens
             SelectedScreen.MatchPoints = SelectedScreen.MatchPoints ?? new List<ColorPoint>();
             SelectedScreen.MatchPoints.Add(newPoint);
             AddColorPointEditor(newPoint);
-            Program.NotifyConfigUpdate();
+            Program.ConfigUpdates.Notify(Program.Config);
         }
 
         private void CaptureBox_Click(object sender, EventArgs e)
@@ -210,7 +210,7 @@ namespace ScreenshotHud.Screens
             SelectedScreen.CaptureBoxes.Add(newBox);
             newBox.Name = $"Box {SelectedScreen.CaptureBoxes.Count}";
             AddCaptureBoxEditor(newBox);
-            Program.NotifyConfigUpdate();
+            Program.ConfigUpdates.Notify(Program.Config);
         }
 
         private void chkScreenshot_CheckedChanged(object sender, EventArgs e)

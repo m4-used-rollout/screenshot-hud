@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScreenshotHud.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -16,25 +17,7 @@ namespace ScreenshotHud
         public static double AspectRatio => CurrentShot.Width / (double)CurrentShot.Height;
         private static Graphics ShotGraphics { get; set; }
 
-        private static List<Action<Bitmap>> ShotUpdateCallbacks { get; } = new List<Action<Bitmap>>();
-
-        public static void Register(Action<Bitmap> callback)
-        {
-            if (!ShotUpdateCallbacks.Contains(callback))
-                ShotUpdateCallbacks.Add(callback);
-            if (CurrentShot != null)
-                callback(CurrentShot);
-        }
-
-        public static void Unregister(Action<Bitmap> callback)
-        {
-            ShotUpdateCallbacks.Remove(callback);
-        }
-
-        private static void Notify()
-        {
-            ShotUpdateCallbacks.ForEach(f => f(CurrentShot));
-        }
+        public static Notifier<Bitmap> ShotNotifier { get; } = new Notifier<Bitmap>(()=>CurrentShot);
 
         public static void Freeze()
         {
@@ -62,7 +45,7 @@ namespace ScreenshotHud
                     ShotGraphics = Graphics.FromImage(CurrentShot);
                 }
                 ShotGraphics.CopyFromScreen(Bounds.Left, Bounds.Top, 0, 0, Bounds.Size);
-                Notify();
+                ShotNotifier.Notify(CurrentShot);
             }
         }
     }

@@ -21,7 +21,10 @@ namespace ScreenshotHud
             numColorDrift.Value = Config.MatchColorDrift;
             numCaptureSpeed.Value = Config.ShotDelayMS;
             CaptureTimer.Interval = Config.ShotDelayMS;
-            Program.RegisterForConfigUpdate(ConfigUpdate);
+            numWebsocketPort.Value = Config.WebsocketPort;
+            checkBoxHttpServer.Checked = Config.WebsocketServer;
+            numWebsocketPort.Enabled = !Config.WebsocketServer;
+            Program.ConfigUpdates.Register(ConfigUpdate);
             DisplaySelect.DataSource = Screen.AllScreens;
             DisplaySelect.DisplayMember = "Bounds";
             if (Config.SelectedDisplay != null && Config.SelectedDisplay < Screen.AllScreens.Length)
@@ -29,7 +32,7 @@ namespace ScreenshotHud
             else
                 DisplaySelect.SelectedItem = Screen.AllScreens.Last();
             ShotTaker.Screen = DisplaySelect.SelectedItem as Screen;
-            ShotTaker.Register(capture =>
+            ShotTaker.ShotNotifier.Register(capture =>
             {
                 if (capture != null)
                     Config?.DetectedScreens?.ForEach(s => s.MatchAndSave(capture));
@@ -70,22 +73,23 @@ namespace ScreenshotHud
             if (ShotTaker.Screen != null)
             {
                 ConfigPosSize = new Rectangle(Left, Top, Width, Height);
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify(Program.Config);
             }
         }
 
-        private void ConfigUpdate()
+        private void ConfigUpdate(Config conf)
         {
-            if (Config.AutoSave)
+            if (conf.AutoSave)
                 SaveConfig();
             else
                 btnSave.Enabled = true;
-            if (Config.SelectedDisplay != null && Config.SelectedDisplay < Screen.AllScreens.Length)
-                DisplaySelect.SelectedIndex = Config.SelectedDisplay ?? DisplaySelect.SelectedIndex;
-            numColorDrift.Value = Config.MatchColorDrift;
-            numCaptureSpeed.Value = Config.ShotDelayMS;
-            CaptureTimer.Interval = Config.ShotDelayMS;
-            chkAutoSave.Checked = Config.AutoSave;
+            if (conf.SelectedDisplay != null && conf.SelectedDisplay < DisplaySelect.Items.Count)
+                DisplaySelect.SelectedIndex = conf.SelectedDisplay ?? DisplaySelect.SelectedIndex;
+            numColorDrift.Value = conf.MatchColorDrift;
+            numCaptureSpeed.Value = conf.ShotDelayMS;
+            CaptureTimer.Interval = conf.ShotDelayMS;
+            chkAutoSave.Checked = conf.AutoSave;
+            numWebsocketPort.Enabled = !conf.WebsocketServer;
         }
 
         private void CaptureTimer_Tick(object sender, EventArgs e)
@@ -126,7 +130,7 @@ namespace ScreenshotHud
                     ShotTaker.Screen = DisplaySelect.SelectedItem as Screen;
                 }
                 Config.SelectedDisplay = DisplaySelect.SelectedIndex;
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify(Program.Config);
             }
         }
 
@@ -155,7 +159,7 @@ namespace ScreenshotHud
             if (ShotTaker.Screen != null)
             {
                 Program.Config.AutoSave = chkAutoSave.Checked;
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify(Program.Config);
             }
         }
 
@@ -164,13 +168,13 @@ namespace ScreenshotHud
             if (ShotTaker.Screen != null)
             {
                 Config.MatchColorDrift = (int)numColorDrift.Value;
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify(Program.Config);
             }
         }
         private void numCaptureSpeed_ValueChanged(object sender, EventArgs e)
         {
             Program.Config.ShotDelayMS = (int)numCaptureSpeed.Value;
-            Program.NotifyConfigUpdate();
+            Program.ConfigUpdates.Notify(Program.Config);
         }
 
         private void BtnOverlay_Click(object sender, EventArgs e)
@@ -178,6 +182,16 @@ namespace ScreenshotHud
             SpawnOverlay();
         }
 
+        private void checkBoxHttpServer_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Config.WebsocketServer = checkBoxHttpServer.Checked;
+            Program.ConfigUpdates.Notify(Program.Config);
+        }
 
+        private void numWebsocketPort_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Config.WebsocketPort = (int)numWebsocketPort.Value;
+            Program.ConfigUpdates.Notify(Program.Config);
+        }
     }
 }

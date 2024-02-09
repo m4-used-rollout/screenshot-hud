@@ -15,13 +15,13 @@ namespace ScreenshotHud
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            ShotTaker.Register(UpdateImage);
+            ShotTaker.ShotNotifier.Register(UpdateImage);
             FixAspectRatio();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            ShotTaker.Unregister(UpdateImage);
+            ShotTaker.ShotNotifier.Unregister(UpdateImage);
             base.OnFormClosing(e);
         }
 
@@ -70,7 +70,7 @@ namespace ScreenshotHud
             if (ShotTaker.Screen != null)
             {
                 ConfigPosSize = new Rectangle(Left, Top, Width, Height);
-                Program.NotifyConfigUpdate();
+                Program.ConfigUpdates.Notify();
             }
         }
 

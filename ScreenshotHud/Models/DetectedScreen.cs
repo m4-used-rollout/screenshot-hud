@@ -17,7 +17,6 @@ namespace ScreenshotHud.Models
 
         [JsonIgnore]
         public Bitmap LastCapture { get; set; }
-        [JsonIgnore]
         public DateTime LastMatchTime { get; set; }
         [JsonIgnore]
         protected bool LastCheckMatched { get; set; } = false;
@@ -30,7 +29,8 @@ namespace ScreenshotHud.Models
             {
                 LastCapture = capture;
                 LastMatchTime = DateTime.Now;
-                CaptureBoxes?.Where(b => b.Size.Width > 0 && b.Size.Height > 0).ToList().ForEach(b => {
+                CaptureBoxes?.Where(b => b.Size.Width > 0 && b.Size.Height > 0).ToList().ForEach(b =>
+                {
                     b.LastCapture?.Dispose();
                     var safeBox = new Rectangle(b.Point.X, b.Point.Y, b.Size.Width, b.Size.Height);
                     if (safeBox.Right > capture.Width)
@@ -38,10 +38,17 @@ namespace ScreenshotHud.Models
                     if (safeBox.Bottom > capture.Height)
                         safeBox.Height -= safeBox.Bottom - capture.Height;
                     b.LastCapture = capture.Clone(safeBox, capture.PixelFormat);
-                    });
-                if (SaveScreenshot && !LastCheckMatched)
-                    ScreenshotWriter.WriteScreenshot(capture, Name);
+                });
+                if (!LastCheckMatched)
+                {
+                    LastCheckMatched = match;
+                    if (SaveScreenshot)
+                        ScreenshotWriter.WriteScreenshot(capture, Name);
+                    Program.ScreenUpdates.Notify();
+                }
             }
+            //else if (LastCheckMatched)
+            //    Program.ScreenUpdates.Notify();
             LastCheckMatched = match;
             return match;
         }

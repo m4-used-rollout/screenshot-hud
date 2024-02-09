@@ -28,14 +28,14 @@ namespace ScreenshotHud.Screens
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            RemakeImage();
-            ShotTaker.Register(UpdateImage);
-            Program.RegisterForConfigUpdate(RemakeImage);
+            RemakeImage(Program.Config);
+            ShotTaker.ShotNotifier.Register(UpdateImage);
+            Program.ConfigUpdates.Register(RemakeImage);
         }
 
         private static IEnumerable<DetectedScreen> Screens => Program.Config.DetectedScreens?.Select(s => s).OrderBy(s => s.LastMatchTime);
 
-        private void RemakeImage()
+        private void RemakeImage(Config config)
         {
             List<CaptureBox> boxes = Screens?.SelectMany(s => s.CaptureBoxes ?? new List<CaptureBox>())?.ToList() ?? new List<CaptureBox>();
             OverlayBox.Image?.Dispose();
@@ -61,7 +61,7 @@ namespace ScreenshotHud.Screens
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            ShotTaker.Unregister(UpdateImage);
+            ShotTaker.ShotNotifier.Unregister(UpdateImage);
             base.OnFormClosing(e);
         }
 
@@ -74,7 +74,7 @@ namespace ScreenshotHud.Screens
         private void OverlayBox_Click(object sender, EventArgs e)
         {
             ShowBoxLayout = !ShowBoxLayout;
-            RemakeImage();
+            RemakeImage(Program.Config);
         }
     }
 }

@@ -53,6 +53,10 @@ namespace ScreenshotHud
             panel5 = new System.Windows.Forms.Panel();
             label5 = new System.Windows.Forms.Label();
             numCaptureSpeed = new System.Windows.Forms.NumericUpDown();
+            panel6 = new System.Windows.Forms.Panel();
+            label6 = new System.Windows.Forms.Label();
+            numWebsocketPort = new System.Windows.Forms.NumericUpDown();
+            checkBoxHttpServer = new System.Windows.Forms.CheckBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -60,6 +64,8 @@ namespace ScreenshotHud
             ((System.ComponentModel.ISupportInitialize)numColorDrift).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numCaptureSpeed).BeginInit();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numWebsocketPort).BeginInit();
             SuspendLayout();
             // 
             // CaptureTimer
@@ -86,7 +92,7 @@ namespace ScreenshotHud
             panel1.Controls.Add(btnEditor);
             panel1.Controls.Add(btnOverlay);
             panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel1.Location = new System.Drawing.Point(0, 195);
+            panel1.Location = new System.Drawing.Point(0, 237);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(550, 57);
             panel1.TabIndex = 1;
@@ -162,7 +168,7 @@ namespace ScreenshotHud
             panel2.Controls.Add(btnExport);
             panel2.Controls.Add(label2);
             panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel2.Location = new System.Drawing.Point(0, 145);
+            panel2.Location = new System.Drawing.Point(0, 187);
             panel2.MinimumSize = new System.Drawing.Size(0, 50);
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(550, 50);
@@ -291,13 +297,56 @@ namespace ScreenshotHud
             numCaptureSpeed.Value = new decimal(new int[] { 16, 0, 0, 0 });
             numCaptureSpeed.ValueChanged += numCaptureSpeed_ValueChanged;
             // 
+            // panel6
+            // 
+            panel6.Controls.Add(label6);
+            panel6.Controls.Add(numWebsocketPort);
+            panel6.Controls.Add(checkBoxHttpServer);
+            panel6.Dock = System.Windows.Forms.DockStyle.Top;
+            panel6.Location = new System.Drawing.Point(0, 144);
+            panel6.Name = "panel6";
+            panel6.Size = new System.Drawing.Size(550, 43);
+            panel6.TabIndex = 7;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(351, 6);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(50, 30);
+            label6.TabIndex = 2;
+            label6.Text = "Port";
+            // 
+            // numWebsocketPort
+            // 
+            numWebsocketPort.Location = new System.Drawing.Point(407, 2);
+            numWebsocketPort.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
+            numWebsocketPort.Minimum = new decimal(new int[] { 1025, 0, 0, 0 });
+            numWebsocketPort.Name = "numWebsocketPort";
+            numWebsocketPort.Size = new System.Drawing.Size(131, 35);
+            numWebsocketPort.TabIndex = 1;
+            numWebsocketPort.Value = new decimal(new int[] { 1025, 0, 0, 0 });
+            numWebsocketPort.ValueChanged += numWebsocketPort_ValueChanged;
+            // 
+            // checkBoxHttpServer
+            // 
+            checkBoxHttpServer.AutoSize = true;
+            checkBoxHttpServer.Location = new System.Drawing.Point(16, 6);
+            checkBoxHttpServer.Name = "checkBoxHttpServer";
+            checkBoxHttpServer.Size = new System.Drawing.Size(294, 34);
+            checkBoxHttpServer.TabIndex = 0;
+            checkBoxHttpServer.Text = "Serve State over Websocket";
+            checkBoxHttpServer.UseVisualStyleBackColor = true;
+            checkBoxHttpServer.CheckedChanged += checkBoxHttpServer_CheckedChanged;
+            // 
             // Control
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            ClientSize = new System.Drawing.Size(550, 252);
+            ClientSize = new System.Drawing.Size(550, 294);
+            Controls.Add(panel6);
             Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel3);
@@ -319,6 +368,9 @@ namespace ScreenshotHud
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numCaptureSpeed).EndInit();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numWebsocketPort).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -348,6 +400,10 @@ namespace ScreenshotHud
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.NumericUpDown numCaptureSpeed;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.NumericUpDown numWebsocketPort;
+        private System.Windows.Forms.CheckBox checkBoxHttpServer;
+        private System.Windows.Forms.Label label6;
     }
 }
 

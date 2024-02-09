@@ -3,6 +3,8 @@ using ScreenshotHud.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ScreenshotHud
@@ -15,6 +17,8 @@ namespace ScreenshotHud
         [STAThread]
         static void Main()
         {
+            ConfigUpdates.Register(UpdateWSServer);
+            ScreenUpdates.Register(NotifyWSClients);
             LoadConfig();
             Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
             Application.EnableVisualStyles();
@@ -24,22 +28,36 @@ namespace ScreenshotHud
 
         private static string ConfigFile = Application.StartupPath + "\\config.json";
 
+        private static WebsocketBroadcastServer WebsocketServer = null;
+
         public static Config Config { get; set; } = new Config();
 
-        private static List<Action> ConfigSubscribers { get; } = new List<Action>();
-        public static void RegisterForConfigUpdate(Action callback)
+        private static readonly Func<string> SerializeScreens = () => JsonConvert.SerializeObject(Config.DetectedScreens);
+        private async static void UpdateWSServer(Config conf)
         {
-            if (!ConfigSubscribers.Contains(callback))
-                ConfigSubscribers.Add(callback);
+            if (conf.WebsocketServer && WebsocketServer == null)
+            {
+                WebsocketServer = new WebsocketBroadcastServer("*", conf.WebsocketPort)
+                {
+                    WelcomeMessage = SerializeScreens
+                };
+                await WebsocketServer.Listen();
+            }
+            else if (!conf.WebsocketServer)
+            {
+                WebsocketServer?.Stop();
+                WebsocketServer = null;
+            }
         }
-        public static void UnregisterForConfigUpdate(Action callback)
+
+        private static void NotifyWSClients(IEnumerable<DetectedScreen> screens)
         {
-            ConfigSubscribers.Remove(callback);
+            Task _ = WebsocketServer?.Send(JsonConvert.SerializeObject(screens), CancellationToken.None);
         }
-        public static void NotifyConfigUpdate()
-        {
-            ConfigSubscribers.ForEach(f => f());
-        }
+
+        public static Notifier<Config> ConfigUpdates { get; private set; } = new Notifier<Config>(()=>Config);
+
+        public static Notifier<IEnumerable<DetectedScreen>> ScreenUpdates { get; private set; } = new Notifier<IEnumerable<DetectedScreen>>(()=>Config.DetectedScreens);
 
         public static void SaveConfig(string filename = null)
         {
@@ -50,7 +68,7 @@ namespace ScreenshotHud
             if (File.Exists(filename ?? ConfigFile))
             {
                 Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(filename ?? ConfigFile));
-                NotifyConfigUpdate();
+                ConfigUpdates.Notify(Config);
             }
         }
     }

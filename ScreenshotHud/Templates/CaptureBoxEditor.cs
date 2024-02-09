@@ -41,7 +41,7 @@ namespace ScreenshotHud.Templates
             PauseUpdates = false;
         }
 
-        private void Save() => Program.NotifyConfigUpdate();
+        private void Save() => Program.ConfigUpdates.Notify();
 
         private void UpdatePoint(Point point)
         {
