@@ -32,54 +32,55 @@ namespace ScreenshotHud.Templates
             System.Windows.Forms.Button btnPointer;
             System.Windows.Forms.Button btnWidthPointer;
             System.Windows.Forms.Button btnDelete;
-            this.yBox = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.xBox = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.wBox = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.hBox = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.destXBox = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.destYBox = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
+            yBox = new System.Windows.Forms.NumericUpDown();
+            label2 = new System.Windows.Forms.Label();
+            xBox = new System.Windows.Forms.NumericUpDown();
+            label1 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            wBox = new System.Windows.Forms.NumericUpDown();
+            label4 = new System.Windows.Forms.Label();
+            hBox = new System.Windows.Forms.NumericUpDown();
+            label5 = new System.Windows.Forms.Label();
+            destXBox = new System.Windows.Forms.NumericUpDown();
+            label6 = new System.Windows.Forms.Label();
+            destYBox = new System.Windows.Forms.NumericUpDown();
+            label7 = new System.Windows.Forms.Label();
+            txtName = new System.Windows.Forms.TextBox();
+            chkOCR = new System.Windows.Forms.CheckBox();
             btnPointer = new System.Windows.Forms.Button();
             btnWidthPointer = new System.Windows.Forms.Button();
             btnDelete = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.yBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.destXBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.destYBox)).BeginInit();
-            this.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)yBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)xBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)wBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)hBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)destXBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)destYBox).BeginInit();
+            SuspendLayout();
             // 
             // btnPointer
             // 
             btnPointer.Anchor = System.Windows.Forms.AnchorStyles.Left;
             btnPointer.AutoSize = true;
-            btnPointer.Image = global::ScreenshotHud.Properties.Resources._9990f3d7247c46cae16abb679d5290dcU9dKwIJvjkFqh1mu_4;
+            btnPointer.Image = Properties.Resources._9990f3d7247c46cae16abb679d5290dcU9dKwIJvjkFqh1mu_4;
             btnPointer.Location = new System.Drawing.Point(437, 6);
             btnPointer.Name = "btnPointer";
             btnPointer.Size = new System.Drawing.Size(37, 35);
             btnPointer.TabIndex = 15;
             btnPointer.UseVisualStyleBackColor = true;
-            btnPointer.Click += new System.EventHandler(this.btnPointer_Click);
+            btnPointer.Click += btnPointer_Click;
             // 
             // btnWidthPointer
             // 
             btnWidthPointer.Anchor = System.Windows.Forms.AnchorStyles.Left;
             btnWidthPointer.AutoSize = true;
-            btnWidthPointer.Image = global::ScreenshotHud.Properties.Resources._9990f3d7247c46cae16abb679d5290dcU9dKwIJvjkFqh1mu_4;
+            btnWidthPointer.Image = Properties.Resources._9990f3d7247c46cae16abb679d5290dcU9dKwIJvjkFqh1mu_4;
             btnWidthPointer.Location = new System.Drawing.Point(729, 6);
             btnWidthPointer.Name = "btnWidthPointer";
             btnWidthPointer.Size = new System.Drawing.Size(37, 35);
             btnWidthPointer.TabIndex = 15;
             btnWidthPointer.UseVisualStyleBackColor = true;
-            btnWidthPointer.Click += new System.EventHandler(this.btnWidthPointer_Click);
+            btnWidthPointer.Click += btnWidthPointer_Click;
             // 
             // btnDelete
             // 
@@ -91,183 +92,184 @@ namespace ScreenshotHud.Templates
             btnDelete.TabIndex = 18;
             btnDelete.Text = "X";
             btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            btnDelete.Click += btnDelete_Click;
             // 
             // yBox
             // 
-            this.yBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.yBox.Location = new System.Drawing.Point(349, 7);
-            this.yBox.Name = "yBox";
-            this.yBox.Size = new System.Drawing.Size(82, 35);
-            this.yBox.TabIndex = 14;
-            this.yBox.ValueChanged += new System.EventHandler(this.yBox_ValueChanged);
+            yBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            yBox.Location = new System.Drawing.Point(349, 7);
+            yBox.Name = "yBox";
+            yBox.Size = new System.Drawing.Size(82, 35);
+            yBox.TabIndex = 14;
+            yBox.ValueChanged += yBox_ValueChanged;
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(318, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 30);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Y";
+            label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(318, 9);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(25, 30);
+            label2.TabIndex = 13;
+            label2.Text = "Y";
             // 
             // xBox
             // 
-            this.xBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.xBox.Location = new System.Drawing.Point(231, 7);
-            this.xBox.Name = "xBox";
-            this.xBox.Size = new System.Drawing.Size(79, 35);
-            this.xBox.TabIndex = 12;
-            this.xBox.ValueChanged += new System.EventHandler(this.xBox_ValueChanged);
+            xBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            xBox.Location = new System.Drawing.Point(231, 7);
+            xBox.Name = "xBox";
+            xBox.Size = new System.Drawing.Size(79, 35);
+            xBox.TabIndex = 12;
+            xBox.ValueChanged += xBox_ValueChanged;
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(200, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(25, 30);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "X";
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(200, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(25, 30);
+            label1.TabIndex = 11;
+            label1.Text = "X";
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(492, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 30);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "W";
+            label3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(492, 9);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(33, 30);
+            label3.TabIndex = 11;
+            label3.Text = "W";
             // 
             // wBox
             // 
-            this.wBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.wBox.Location = new System.Drawing.Point(523, 7);
-            this.wBox.Name = "wBox";
-            this.wBox.Size = new System.Drawing.Size(79, 35);
-            this.wBox.TabIndex = 12;
-            this.wBox.ValueChanged += new System.EventHandler(this.wBox_ValueChanged);
+            wBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            wBox.Location = new System.Drawing.Point(523, 7);
+            wBox.Name = "wBox";
+            wBox.Size = new System.Drawing.Size(79, 35);
+            wBox.TabIndex = 12;
+            wBox.ValueChanged += wBox_ValueChanged;
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(610, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 30);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "H";
+            label4.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(610, 9);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(28, 30);
+            label4.TabIndex = 13;
+            label4.Text = "H";
             // 
             // hBox
             // 
-            this.hBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.hBox.Location = new System.Drawing.Point(641, 7);
-            this.hBox.Name = "hBox";
-            this.hBox.Size = new System.Drawing.Size(82, 35);
-            this.hBox.TabIndex = 14;
-            this.hBox.ValueChanged += new System.EventHandler(this.hBox_ValueChanged);
+            hBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            hBox.Location = new System.Drawing.Point(641, 7);
+            hBox.Name = "hBox";
+            hBox.Size = new System.Drawing.Size(82, 35);
+            hBox.TabIndex = 14;
+            hBox.ValueChanged += hBox_ValueChanged;
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(885, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(25, 30);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "X";
+            label5.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(885, 10);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(25, 30);
+            label5.TabIndex = 11;
+            label5.Text = "X";
             // 
             // destXBox
             // 
-            this.destXBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.destXBox.Location = new System.Drawing.Point(916, 8);
-            this.destXBox.Name = "destXBox";
-            this.destXBox.Size = new System.Drawing.Size(79, 35);
-            this.destXBox.TabIndex = 12;
-            this.destXBox.ValueChanged += new System.EventHandler(this.destXBox_ValueChanged);
+            destXBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            destXBox.Location = new System.Drawing.Point(916, 8);
+            destXBox.Name = "destXBox";
+            destXBox.Size = new System.Drawing.Size(79, 35);
+            destXBox.TabIndex = 12;
+            destXBox.ValueChanged += destXBox_ValueChanged;
             // 
             // label6
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1003, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 30);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Y";
+            label6.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(1003, 10);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(25, 30);
+            label6.TabIndex = 13;
+            label6.Text = "Y";
             // 
             // destYBox
             // 
-            this.destYBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.destYBox.Location = new System.Drawing.Point(1034, 8);
-            this.destYBox.Name = "destYBox";
-            this.destYBox.Size = new System.Drawing.Size(82, 35);
-            this.destYBox.TabIndex = 14;
-            this.destYBox.ValueChanged += new System.EventHandler(this.destYBox_ValueChanged);
+            destYBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            destYBox.Location = new System.Drawing.Point(1034, 8);
+            destYBox.Name = "destYBox";
+            destYBox.Size = new System.Drawing.Size(82, 35);
+            destYBox.TabIndex = 14;
+            destYBox.ValueChanged += destYBox_ValueChanged;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(772, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(119, 30);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Destination";
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(772, 10);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(119, 30);
+            label7.TabIndex = 16;
+            label7.Text = "Destination";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(0, 6);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(192, 35);
-            this.txtName.TabIndex = 17;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            txtName.Location = new System.Drawing.Point(0, 6);
+            txtName.Name = "txtName";
+            txtName.Size = new System.Drawing.Size(192, 35);
+            txtName.TabIndex = 17;
+            txtName.TextChanged += txtName_TextChanged;
+            // 
+            // chkOCR
+            // 
+            chkOCR.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            chkOCR.AutoSize = true;
+            chkOCR.Location = new System.Drawing.Point(1165, 8);
+            chkOCR.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
+            chkOCR.Name = "chkOCR";
+            chkOCR.Size = new System.Drawing.Size(81, 34);
+            chkOCR.TabIndex = 19;
+            chkOCR.Text = "OCR";
+            chkOCR.UseVisualStyleBackColor = true;
+            chkOCR.CheckedChanged += chkOCR_CheckedChanged;
             // 
             // CaptureBoxEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(btnDelete);
-            this.Controls.Add(this.txtName);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(btnWidthPointer);
-            this.Controls.Add(this.hBox);
-            this.Controls.Add(btnPointer);
-            this.Controls.Add(this.destYBox);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.yBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.wBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.destXBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.xBox);
-            this.Controls.Add(this.label1);
-            this.Name = "CaptureBoxEditor";
-            this.Size = new System.Drawing.Size(1162, 50);
-            ((System.ComponentModel.ISupportInitialize)(this.yBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.destXBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.destYBox)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(chkOCR);
+            Controls.Add(btnDelete);
+            Controls.Add(txtName);
+            Controls.Add(label7);
+            Controls.Add(btnWidthPointer);
+            Controls.Add(hBox);
+            Controls.Add(btnPointer);
+            Controls.Add(destYBox);
+            Controls.Add(label4);
+            Controls.Add(yBox);
+            Controls.Add(label6);
+            Controls.Add(wBox);
+            Controls.Add(label2);
+            Controls.Add(destXBox);
+            Controls.Add(label3);
+            Controls.Add(label5);
+            Controls.Add(xBox);
+            Controls.Add(label1);
+            Name = "CaptureBoxEditor";
+            Size = new System.Drawing.Size(1275, 50);
+            ((System.ComponentModel.ISupportInitialize)yBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)xBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)wBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)hBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)destXBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)destYBox).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -286,5 +288,6 @@ namespace ScreenshotHud.Templates
         private System.Windows.Forms.NumericUpDown destYBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.CheckBox chkOCR;
     }
 }

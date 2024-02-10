@@ -55,9 +55,9 @@ namespace ScreenshotHud
             Task _ = WebsocketServer?.Send(JsonConvert.SerializeObject(screens), CancellationToken.None);
         }
 
-        public static Notifier<Config> ConfigUpdates { get; private set; } = new Notifier<Config>(()=>Config);
+        public static Notifier<Config> ConfigUpdates { get; private set; } = new(()=>Config);
 
-        public static Notifier<IEnumerable<DetectedScreen>> ScreenUpdates { get; private set; } = new Notifier<IEnumerable<DetectedScreen>>(()=>Config.DetectedScreens);
+        public static Notifier<IEnumerable<DetectedScreen>> ScreenUpdates { get; private set; } = new(()=>Config.DetectedScreens);
 
         public static void SaveConfig(string filename = null)
         {
@@ -71,5 +71,7 @@ namespace ScreenshotHud
                 ConfigUpdates.Notify(Config);
             }
         }
+
+        public static TextLog TextLog { get; private set; } = new();
     }
 }

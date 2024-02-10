@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ScreenshotHud.Models
 {
@@ -31,6 +32,7 @@ namespace ScreenshotHud.Models
                 LastMatchTime = DateTime.Now;
                 CaptureBoxes?.Where(b => b.Size.Width > 0 && b.Size.Height > 0).ToList().ForEach(b =>
                 {
+
                     b.LastCapture?.Dispose();
                     var safeBox = new Rectangle(b.Point.X, b.Point.Y, b.Size.Width, b.Size.Height);
                     if (safeBox.Right > capture.Width)
@@ -38,17 +40,29 @@ namespace ScreenshotHud.Models
                     if (safeBox.Bottom > capture.Height)
                         safeBox.Height -= safeBox.Bottom - capture.Height;
                     b.LastCapture = capture.Clone(safeBox, capture.PixelFormat);
+                    if (b.OCR)
+                    {
+                        Program.TextLog.FindAndLogText(b);
+                    }
                 });
                 if (!LastCheckMatched)
                 {
+                    // Just started matching
                     LastCheckMatched = match;
                     if (SaveScreenshot)
                         ScreenshotWriter.WriteScreenshot(capture, Name);
                     Program.ScreenUpdates.Notify();
                 }
             }
-            //else if (LastCheckMatched)
-            //    Program.ScreenUpdates.Notify();
+            else if (LastCheckMatched)
+            {
+                // Just stopped matching
+                foreach (var box in CaptureBoxes.Where(b => b.OCR))
+                {
+                    Program.TextLog.Flush(box);
+                }
+                //Program.ScreenUpdates.Notify();
+            }
             LastCheckMatched = match;
             return match;
         }

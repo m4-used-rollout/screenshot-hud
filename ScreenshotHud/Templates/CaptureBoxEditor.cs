@@ -26,6 +26,7 @@ namespace ScreenshotHud.Templates
             txtName.Text = box.Name;
             xBox.Maximum = wBox.Maximum = destXBox.Maximum = resolution.Width - 1;
             yBox.Maximum = hBox.Maximum = destYBox.Maximum = resolution.Height - 1;
+            chkOCR.Checked = box.OCR;
             UpdateControls();
         }
 
@@ -132,10 +133,17 @@ namespace ScreenshotHud.Templates
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            if (txtName.TextLength > 0) {
+            if (txtName.TextLength > 0)
+            {
                 CaptureBox.Name = txtName.Text;
                 Save();
             }
+        }
+
+        private void chkOCR_CheckedChanged(object sender, EventArgs e)
+        {
+            CaptureBox.OCR = chkOCR.Checked;
+            Save();
         }
     }
 }

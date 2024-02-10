@@ -53,7 +53,7 @@ namespace ScreenshotHud.Screens
                     var pen = new Pen(Colors[i]);
                     var rectangle = new Rectangle(b.DisplayLocation.X, b.DisplayLocation.Y, b.Size.Width, b.Size.Height);
                     OverlayDrawing.FillRectangle(pen.Brush, rectangle);
-                    OverlayDrawing.DrawString(b.Name, DefaultFont, penBlack.Brush, rectangle);
+                    OverlayDrawing.DrawString(b.OCR && !string.IsNullOrWhiteSpace(Program.TextLog.LastDetectedText(b)) ? $"{b.Name}\n{Program.TextLog.LastDetectedText(b)}" : b.Name, DefaultFont, penBlack.Brush, rectangle);
                 }
             });
             OverlayBox.Invalidate();
