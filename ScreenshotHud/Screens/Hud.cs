@@ -39,7 +39,7 @@ namespace ScreenshotHud.Screens
         {
             List<CaptureBox> boxes = Screens?.SelectMany(s => s.CaptureBoxes ?? new List<CaptureBox>())?.ToList() ?? new List<CaptureBox>();
             OverlayBox.Image?.Dispose();
-            OverlayBox.Image = new Bitmap(boxes.Max(b => b.DisplayLocation.X + b.Size.Width), boxes.Max(b => b.DisplayLocation.Y + b.Size.Height));
+            OverlayBox.Image = boxes.Count > 0 ? new Bitmap(boxes.Max(b => b.DisplayLocation.X + b.Size.Width), boxes.Max(b => b.DisplayLocation.Y + b.Size.Height)) : new Bitmap(1, 1);
             OverlayDrawing = Graphics.FromImage(OverlayBox.Image);
             boxes.ForEach(b =>
             {
