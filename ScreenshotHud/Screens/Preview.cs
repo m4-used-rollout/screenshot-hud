@@ -27,12 +27,8 @@ namespace ScreenshotHud
 
         public void UpdateImage(Bitmap bg)
         {
-            if (bg != null && bg.Width > 0 && bg.Height > 0)
-            {
-                CaptureBox.Image?.Dispose();
-                CaptureBox.Image = bg.Clone() as Image;
-                CaptureBox.Invalidate();
-            }
+            CaptureBox.Image = bg;
+            CaptureBox.Invalidate();
         }
 
         protected override void OnSizeChanged(EventArgs e)

@@ -53,6 +53,8 @@ namespace ScreenshotHud.Screens
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             ShotTaker.ShotNotifier.Unregister(UpdateCapture);
+            if (ShotTaker.IsFrozen)
+                ShotTaker.Freeze();
             base.OnFormClosing(e);
         }
 
@@ -221,7 +223,7 @@ namespace ScreenshotHud.Screens
         private void btnFreeze_Click(object sender, EventArgs e)
         {
             ShotTaker.Freeze();
-            if (btnFreeze.Text == "Freeze")
+            if (ShotTaker.IsFrozen)
                 btnFreeze.Text = "Thaw";
             else
                 btnFreeze.Text = "Freeze";

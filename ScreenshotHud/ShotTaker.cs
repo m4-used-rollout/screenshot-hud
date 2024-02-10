@@ -14,6 +14,7 @@ namespace ScreenshotHud
         private static Bitmap currentShot;
         private static Bitmap frozenShot;
         public static Bitmap CurrentShot { get => frozenShot ?? currentShot; set => currentShot = value; }
+        public static bool IsFrozen => frozenShot != null;
         public static double AspectRatio => CurrentShot.Width / (double)CurrentShot.Height;
         private static Graphics ShotGraphics { get; set; }
 
@@ -27,7 +28,6 @@ namespace ScreenshotHud
             }
             else
             {
-                frozenShot.Dispose();
                 frozenShot = null;
             }
         }
