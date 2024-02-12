@@ -57,10 +57,7 @@ namespace ScreenshotHud.Models
             else if (LastCheckMatched)
             {
                 // Just stopped matching
-                foreach (var box in CaptureBoxes.Where(b => b.OCR))
-                {
-                    Program.TextLog.Flush(box);
-                }
+                CaptureBoxes?.Where(b => b.OCR).ToList().ForEach(box => Program.TextLog.Flush(box));
                 //Program.ScreenUpdates.Notify();
             }
             LastCheckMatched = match;

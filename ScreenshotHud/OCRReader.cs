@@ -15,7 +15,7 @@ namespace ScreenshotHud
     public static class OCRReader
     {
         private static readonly Language ocrLanguage = new("en");
-        private static readonly OcrEngine ocrEngine = OcrEngine.TryCreateFromLanguage(ocrLanguage);
+        private static OcrEngine ocrEngine { get => OcrEngine.TryCreateFromLanguage(ocrLanguage); }
 
         public static async Task<string> Scan(Bitmap bitmap)
         {

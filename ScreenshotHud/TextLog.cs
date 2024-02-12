@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,6 +12,7 @@ namespace ScreenshotHud
     public class TextLog : IDisposable
     {
         private readonly Dictionary<string, (DateTime Time, string Text)> activeCaptures = [];
+        private Task previousTask = Task.FromResult(true);
         private bool disposedValue;
 
         private FileStream _file;
@@ -32,45 +34,63 @@ namespace ScreenshotHud
         }
         private StreamWriter Writer { get => _writer ??= new(LogFile); }
 
-        public string LastDetectedText(CaptureBox box) => activeCaptures.GetValueOrDefault(box.Name).Text;
+        private Task QueueTask(Action action)
+        {
+            lock (activeCaptures)
+            {
+                previousTask = previousTask.ContinueWith(
+                  t => action(),
+                  CancellationToken.None,
+                  TaskContinuationOptions.None,
+                  TaskScheduler.Default);
+                return previousTask;
+            }
+        }
+
+        public string LastDetectedText(CaptureBox box)
+        {
+            lock (activeCaptures)
+            {
+                return activeCaptures.GetValueOrDefault(box.Name).Text;
+            }
+        }
         public void FindAndLogText(CaptureBox box)
         {
-            var lastCapture = box.LastCapture.Clone() as Bitmap;
-            new Task(() =>
+            var lastCapture = (box.Name, DateTime.UtcNow, box.LastCapture.Clone() as Bitmap);
+            QueueTask(async () =>
             {
-                lock (activeCaptures)
-                {
-                    var text = OCRReader.Scan(lastCapture).Result;
-                    var last = activeCaptures.GetValueOrDefault(box.Name);
-                    lastCapture.Dispose();
+                var text = await OCRReader.Scan(lastCapture.Item3);
+                var last = activeCaptures.GetValueOrDefault(lastCapture.Name);
+                lastCapture.Item3.Dispose();
 
-                    if (!string.IsNullOrWhiteSpace(last.Text))
+                if (!string.IsNullOrWhiteSpace(last.Text))
+                {
+                    if (text?.Contains(last.Text) ?? false)
                     {
-                        if (text?.Contains(last.Text) ?? false)
-                        {
-                            // Got more characters from existing capture
-                            last.Text = text;
-                            activeCaptures[box.Name] = last;
-                            return;
-                        }
-                        // Flush existing capture
-                        WriteLogEntry(last.Time, box.Name, last.Text);
-                    }
-                    if (!string.IsNullOrWhiteSpace(text))
-                    {
-                        // Start new capture
-                        last.Time = DateTime.UtcNow;
+                        // Got more characters from existing capture
                         last.Text = text;
-                        activeCaptures[box.Name] = last;
+                        activeCaptures[lastCapture.Name] = last;
+                        return;
                     }
-                    else
-                        activeCaptures.Remove(box.Name);
+                    // Flush existing capture
+                    WriteLogEntry(last.Time, lastCapture.Name, last.Text);
                 }
-            }).Start();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    // Start new capture
+                    last.Time = lastCapture.UtcNow;
+                    last.Text = text;
+                    activeCaptures[lastCapture.Name] = last;
+                }
+                else
+                    activeCaptures.Remove(lastCapture.Name);
+            });
         }
         public void Flush(CaptureBox box)
         {
-            lock (activeCaptures)
+            var boxToFlush = box.Name;
+
+            QueueTask(() =>
             {
                 var last = activeCaptures.GetValueOrDefault(box.Name);
                 if (!string.IsNullOrWhiteSpace(last.Text))
@@ -78,7 +98,7 @@ namespace ScreenshotHud
                     WriteLogEntry(last.Time, box.Name, last.Text);
                 }
                 activeCaptures.Remove(box.Name);
-            }
+            });
         }
 
         private void WriteLogEntry(DateTime time, string title, string text)
