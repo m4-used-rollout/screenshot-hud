@@ -38,14 +38,18 @@ namespace ScreenshotHud
                 return;
             lock (Screen)
             {
-                if (CurrentShot?.Width != Bounds.Width || CurrentShot?.Height != Bounds.Height)
+                try
                 {
-                    frozenShot = null;
-                    CurrentShot = new Bitmap(Bounds.Width, Bounds.Height, PixelFormat.Format32bppArgb);
-                    ShotGraphics = Graphics.FromImage(CurrentShot);
+                    if (CurrentShot?.Width != Bounds.Width || CurrentShot?.Height != Bounds.Height)
+                    {
+                        frozenShot = null;
+                        CurrentShot = new Bitmap(Bounds.Width, Bounds.Height, PixelFormat.Format32bppArgb);
+                        ShotGraphics = Graphics.FromImage(CurrentShot);
+                    }
+                    ShotGraphics.CopyFromScreen(Bounds.Left, Bounds.Top, 0, 0, Bounds.Size);
+                    ShotNotifier.Notify(CurrentShot);
                 }
-                ShotGraphics.CopyFromScreen(Bounds.Left, Bounds.Top, 0, 0, Bounds.Size);
-                ShotNotifier.Notify(CurrentShot);
+                catch { }
             }
         }
     }

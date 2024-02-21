@@ -59,31 +59,35 @@ namespace ScreenshotHud
             var lastCapture = (box.Name, DateTime.UtcNow, box.LastCapture.Clone() as Bitmap);
             QueueTask(async () =>
             {
-                var text = await OCRReader.Scan(lastCapture.Item3);
-                var last = activeCaptures.GetValueOrDefault(lastCapture.Name);
-                lastCapture.Item3.Dispose();
-
-                if (!string.IsNullOrWhiteSpace(last.Text))
+                try
                 {
-                    if (text?.Contains(last.Text) ?? false)
+                    var text = await OCRReader.Scan(lastCapture.Item3);
+                    var last = activeCaptures.GetValueOrDefault(lastCapture.Name);
+                    lastCapture.Item3.Dispose();
+
+                    if (!string.IsNullOrWhiteSpace(last.Text))
                     {
-                        // Got more characters from existing capture
+                        if (text?.Contains(last.Text) ?? false)
+                        {
+                            // Got more characters from existing capture
+                            last.Text = text;
+                            activeCaptures[lastCapture.Name] = last;
+                            return;
+                        }
+                        // Flush existing capture
+                        WriteLogEntry(last.Time, lastCapture.Name, last.Text);
+                    }
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        // Start new capture
+                        last.Time = lastCapture.UtcNow;
                         last.Text = text;
                         activeCaptures[lastCapture.Name] = last;
-                        return;
                     }
-                    // Flush existing capture
-                    WriteLogEntry(last.Time, lastCapture.Name, last.Text);
+                    else
+                        activeCaptures.Remove(lastCapture.Name);
                 }
-                if (!string.IsNullOrWhiteSpace(text))
-                {
-                    // Start new capture
-                    last.Time = lastCapture.UtcNow;
-                    last.Text = text;
-                    activeCaptures[lastCapture.Name] = last;
-                }
-                else
-                    activeCaptures.Remove(lastCapture.Name);
+                catch { }
             });
         }
         public void Flush(CaptureBox box)
@@ -92,19 +96,27 @@ namespace ScreenshotHud
 
             QueueTask(() =>
             {
-                var last = activeCaptures.GetValueOrDefault(box.Name);
-                if (!string.IsNullOrWhiteSpace(last.Text))
+                try
                 {
-                    WriteLogEntry(last.Time, box.Name, last.Text);
+                    var last = activeCaptures.GetValueOrDefault(box.Name);
+                    if (!string.IsNullOrWhiteSpace(last.Text))
+                    {
+                        WriteLogEntry(last.Time, box.Name, last.Text);
+                    }
+                    activeCaptures.Remove(box.Name);
                 }
-                activeCaptures.Remove(box.Name);
+                catch { }
             });
         }
 
         private void WriteLogEntry(DateTime time, string title, string text)
         {
-            Writer.WriteLine($"{time:O} {title}: \"{text}\"");
-            Writer.Flush();
+            try
+            {
+                Writer.WriteLine($"{time:O} {title}: \"{text}\"");
+                Writer.Flush();
+            }
+            catch { }
         }
 
         protected virtual void Dispose(bool disposing)
