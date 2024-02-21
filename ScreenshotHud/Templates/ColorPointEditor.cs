@@ -35,6 +35,7 @@ namespace ScreenshotHud.Templates
             rBox.Value = Point.Color.R;
             bBox.Value = Point.Color.B;
             gBox.Value = Point.Color.G;
+            chkInverse.Checked = Point.Inverse;
             PauseUpdates = false;
         }
 
@@ -44,6 +45,8 @@ namespace ScreenshotHud.Templates
         {
             Point.Point = point;
             Point.Color = ShotTaker.CurrentShot.GetPixel(Point.Point.X, Point.Point.Y);
+            if (Point.Inverse)
+                Point.Color = Color.FromArgb(255 - Point.Color.R, 255 - Point.Color.G, 255 - Point.Color.B);
             UpdateControls();
             Save();
         }
@@ -60,17 +63,13 @@ namespace ScreenshotHud.Templates
         private void xBox_ValueChanged(object sender, EventArgs e)
         {
             if (PauseUpdates) return;
-            Point.Point = new Point((int)xBox.Value, (int)yBox.Value);
-            Point.Color = ShotTaker.CurrentShot.GetPixel(Point.Point.X, Point.Point.Y);
-            Save();
+            UpdatePoint(new Point((int)xBox.Value, (int)yBox.Value));
         }
 
         private void yBox_ValueChanged(object sender, EventArgs e)
         {
             if (PauseUpdates) return;
-            Point.Point = new Point((int)xBox.Value, (int)yBox.Value);
-            Point.Color = ShotTaker.CurrentShot.GetPixel(Point.Point.X, Point.Point.Y);
-            Save();
+            UpdatePoint(new Point((int)xBox.Value, (int)yBox.Value));
         }
 
         private void rBox_ValueChanged(object sender, EventArgs e)
@@ -97,6 +96,15 @@ namespace ScreenshotHud.Templates
         private void btnDelete_Click(object sender, EventArgs e)
         {
             Delete?.Invoke(this);
+        }
+
+        private void chkInverse_CheckedChanged(object sender, EventArgs e)
+        {
+            if (PauseUpdates) return;
+            Point.Inverse = chkInverse.Checked;
+            Point.Color = Color.FromArgb(255 - Point.Color.R, 255 - Point.Color.G, 255 - Point.Color.B);
+            UpdateControls();
+            Save();
         }
     }
 }

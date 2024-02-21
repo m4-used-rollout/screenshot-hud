@@ -65,7 +65,13 @@ namespace ScreenshotHud.Models
         }
         protected bool Match(Bitmap capture) => (MatchPoints?.Count ?? 0) > 0 && (MatchPoints?.TrueForAll(point => CheckPointMatching(point, capture)) ?? false);
 
-        public bool CheckPointMatching(ColorPoint point, Bitmap capture) => ColorMatch(point.Color, capture.GetPixel((int)(point.Point.X / (double)Resolution.Width * capture.Width), (int)(point.Point.Y / (double)Resolution.Height * capture.Height)));
+        public bool CheckPointMatching(ColorPoint point, Bitmap capture)
+        {
+            var match = ColorMatch(point.Color, capture.GetPixel((int)(point.Point.X / (double)Resolution.Width * capture.Width), (int)(point.Point.Y / (double)Resolution.Height * capture.Height)));
+            if (point.Inverse)
+                return !match;
+            return match;
+        }
 
         protected static bool ColorMatch(Color c1, Color c2) =>
             c1.R >= c2.R - Program.Config.MatchColorDrift && c1.R <= c2.R + Program.Config.MatchColorDrift &&

@@ -7,5 +7,6 @@ namespace ScreenshotHud.Models
     {
         public Color Color { get; set; }
         public Point Point { get; set; }
+        public bool Inverse { get; set; } = false;
     }
 }
